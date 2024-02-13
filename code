@@ -1,0 +1,53 @@
+#include <fstream>
+
+using namespace std;
+
+long long m, n, stup[50001], camion[50001], stupuri;
+
+int main()
+{
+    ifstream cin("miere.in");
+    ofstream cout("miere.out");
+    
+    cin >> n;
+    
+    for(int i = 1; i <= n; i ++){
+        cin >> stup[i];
+        stup[i] += stup[i - 1];
+    }
+    
+    int st = 0, dr = n, mij;
+    cin >> m;
+    
+    for(int i = 0; i < m; i ++){
+        cin >> camion[i];
+    }
+    
+    for(int i = 0; i < m; i ++){
+        st = 1;
+        dr = n;
+        bool ok = false;
+        
+        while(st <= dr){
+            mij = (st + dr) / 2;
+            
+            if(camion[i] == stup[mij] + 1LL * mij * i){
+                cout << mij << '\n';
+                ok = true;
+                break;
+            }
+            else if(camion[i] < stup[mij] + 1LL * mij * i){
+                dr = mij - 1;
+            }
+            else{
+                st = mij + 1;
+            }
+        }
+        
+        if(ok == false){
+            cout << dr << '\n';
+        }
+    }
+    
+    return 0;
+}
